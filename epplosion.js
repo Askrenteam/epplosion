@@ -7,7 +7,7 @@ let serverOptions = {
     port: 7000
 }
 
-let helpMessage = 
+const helpMessage =
 `Epplosion - EPP Client
     -u --url\t URL of the EPP server
     -p --port\t port of the EPP server
@@ -73,10 +73,14 @@ const rl = readline.createInterface({
     output: process.stdout,
     terminal: true
 });
-  
+
+rl.on('close', () => {
+    sock.end();
+    process.exit();
+})
 rl.on('line', line => {
     if (["quit", "q", "exit"].includes(line)) {
-        sock.end;
+        sock.end();
         process.exit();
     }
     const buffer = Buffer.from(line.trim());
