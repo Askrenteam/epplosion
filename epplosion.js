@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const net = require('net');
 const readline = require('readline');
+const highlight = require('./syntax-highlight');
 
 let serverOptions = {
     host: "localhost",
@@ -34,17 +35,6 @@ while (arg = args.shift()) {
             process.exit(1);
     }
 }
-
-const green = "\x1b[32m";
-const purple = "\x1b[35m";
-const blue = "\x1b[36m";
-const nocolor = "\x1b[0m"
-
-const highlight = code =>
-    code.replace(
-        /<(\/?\w+)(.*?)>/g,
-        `${green}<${blue}$1${purple}$2${green}>${nocolor}`
-    );
 
 const sock = net.connect(serverOptions);
 sock.on("data", d => {
